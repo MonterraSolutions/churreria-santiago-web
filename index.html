@@ -103,6 +103,9 @@
 html{
   scroll-behavior:smooth;
   scroll-padding-top:96px;
+  /* el rebote del scroll al final destapaba el blanco del navegador;
+     con el color del footer el corte deja de notarse */
+  background:#231710;
 }
 
 body{
@@ -570,9 +573,15 @@ body.ready .hero-content > *{ opacity:1; transform:translateY(0); }
 
 @media (max-width: 980px){
   #hero{
-    min-height:0;
-    padding:clamp(106px, 13vh, 132px) 0 clamp(72px, 9vh, 98px);
+    /* svh = alto de pantalla con las barras del navegador visibles.
+       Con 100vh el celular calcula de más y la primera pantalla queda
+       cortada; con svh entra completa siempre. */
+    min-height:100svh;
+    padding:clamp(96px, 12vh, 128px) 0 clamp(64px, 8vh, 92px);
   }
+}
+@supports not (min-height: 100svh){
+  @media (max-width: 980px){ #hero{ min-height:100vh; } }
 }
 body.ready .hero-content > :nth-child(1){ transition-delay:.15s; }
 body.ready .hero-content > :nth-child(2){ transition-delay:.3s; }
@@ -737,6 +746,35 @@ section{ position:relative; }
   flex-wrap:wrap;
   gap:12px;
   margin-bottom:clamp(30px, 4vw, 44px);
+}
+/* En celular las pestañas se quedan pegadas bajo la barra: la carta es
+   larguísima y obligaba a subir hasta arriba para cambiar de sección.
+   Se vuelven una sola fila deslizable para no comerse media pantalla. */
+@media (max-width: 700px){
+  .menu-tabs{
+    position:sticky;
+    top:var(--barra, 74px);
+    z-index:80;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    gap:9px;
+    margin-left:calc(-1 * var(--pad-lateral, 22px));
+    margin-right:calc(-1 * var(--pad-lateral, 22px));
+    padding:11px var(--pad-lateral, 22px);
+    background:rgba(247,241,230,.94);
+    -webkit-backdrop-filter:blur(12px);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(92,73,54,.14);
+  }
+  .menu-tabs::-webkit-scrollbar{ display:none; }
+  .menu-tab{
+    flex:0 0 auto;
+    min-width:0;
+    padding:11px 19px;
+    font-size:14.5px;
+  }
 }
 .menu-tab{
   flex:1 1 0;
@@ -1081,19 +1119,27 @@ section{ position:relative; }
 }
 .visor-cerrar{
   position:absolute;
-  top:clamp(14px,2.4vw,26px);
-  right:clamp(14px,2.4vw,26px);
+  /* se respeta la muesca del teléfono: pegada a top:14 quedaba debajo de
+     la barra de estado y era casi imposible atinarle */
+  top:calc(env(safe-area-inset-top, 0px) + clamp(14px,2.4vw,26px));
+  right:calc(env(safe-area-inset-right, 0px) + clamp(14px,2.4vw,26px));
   z-index:3;
-  width:50px; height:50px;
+  width:52px; height:52px;
   display:inline-flex;
   align-items:center;
   justify-content:center;
   border-radius:50%;
-  border:1.5px solid rgba(255,255,255,.4);
-  background:rgba(0,0,0,.4);
+  border:1.5px solid rgba(255,255,255,.55);
+  background:rgba(20,12,6,.82);
+  -webkit-backdrop-filter:blur(6px);
+  backdrop-filter:blur(6px);
+  box-shadow:0 4px 18px rgba(0,0,0,.5);
   color:#fff;
   cursor:pointer;
   transition:background .3s ease, border-color .3s ease, transform .3s ease;
+}
+@media (max-width: 700px){
+  .visor-cerrar{ width:56px; height:56px; }
 }
 .visor-cerrar:hover{ background:rgba(255,255,255,.16); border-color:#fff; transform:scale(1.06); }
 .visor-cerrar svg{ width:22px; height:22px; }
@@ -2609,7 +2655,10 @@ footer{
 
     <!-- ============ DESCARGA DE LA CARTA ============ -->
     <div id="descargar" class="menu-descarga" data-reveal>
-      <a class="btn btn-primary" href="menu-churreria-santiago.pdf" target="_blank" rel="noopener" download="Menú - Churrería Santiago.pdf">
+      <!-- sin `download`: ese atributo fuerza la descarga y en el celular el
+       archivo se abría en la misma pestaña. Así se abre a la vista en una
+       pestaña nueva y el usuario decide si lo guarda. -->
+    <a class="btn btn-primary" href="menu-churreria-santiago.pdf" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
         Descarga la carta
       </a>
@@ -3128,7 +3177,7 @@ footer{
      las señales de intención de visita. Estas cuatro son las que sirven
      para optimizar campañas y para saber si la página está trabajando. */
   var EVENTOS = [
-    { sel: '.menu-descarga a[download]',        nombre: "descarga_carta"   },
+    { sel: '.menu-descarga a[href$=".pdf"]',    nombre: "descarga_carta"   },
     { sel: 'a[href^="https://wa.me/"]',         nombre: "click_whatsapp"   },
     { sel: 'a[href*="google.com/maps"]',        nombre: "click_como_llegar"},
     { sel: '.red, .nav-ico, .footer-social a',  nombre: "click_redes"      }
@@ -3175,34 +3224,61 @@ footer{
   var pista = document.querySelector(".galeria-pista");
 
   if (cinta && pista) {
-    var VELOCIDAD = 0.55;      // píxeles por cuadro
+    /* La posición se lleva en una variable propia y no en scrollLeft.
+       Safari de iOS redondea scrollLeft a enteros, así que el avance de
+       medio píxel por cuadro se perdía al releerlo y la cinta se quedaba
+       clavada en el teléfono aunque en escritorio corriera bien.
+       Además va por tiempo y no por cuadro, para que corra igual en
+       pantallas de 60 y de 120 Hz. */
+    var VELOCIDAD = 33;        // píxeles por segundo
     var quieta = false;        // la detiene el mouse encima o el arrastre
-    var tanda = 0;
+    var tanda = 0, pos = 0, aplicado = 0, previo = 0, sueltaEn = 0;
 
     function medir(){ tanda = pista.scrollWidth / 2; }
-    function acomodar(){
+    function envolver(){
       if (tanda <= 0) return;
-      if (cinta.scrollLeft > tanda * 1.5)      cinta.scrollLeft -= tanda;
-      else if (cinta.scrollLeft < tanda * 0.5) cinta.scrollLeft += tanda;
+      if (pos > tanda * 1.5)      pos -= tanda;
+      else if (pos < tanda * 0.5) pos += tanda;
     }
     medir();
-    cinta.scrollLeft = tanda * 0.5;   // arranca a media tanda: se puede ir a los dos lados
+    pos = tanda * 0.5;                // arranca a media tanda: se puede ir a los dos lados
+    cinta.scrollLeft = aplicado = pos;
+
+    // las fotos cargan en diferido: al llegar cambia el ancho de la pista
+    window.addEventListener("load", function(){
+      var antes = tanda; medir();
+      if (antes > 0) { pos = pos / antes * tanda; cinta.scrollLeft = aplicado = pos; }
+    });
     window.addEventListener("resize", function(){
       var antes = tanda; medir();
-      if (antes) cinta.scrollLeft = cinta.scrollLeft / antes * tanda;
+      if (antes > 0) { pos = pos / antes * tanda; cinta.scrollLeft = aplicado = pos; }
     });
 
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    function cuadro(){
-      if (!quieta && !document.hidden && !reduce.matches) cinta.scrollLeft += VELOCIDAD;
-      acomodar();
+    function cuadro(t){
+      var dt = previo ? Math.min((t - previo) / 1000, 0.05) : 0;
+      previo = t;
+
+      // si el dedo movió la cinta por su cuenta, se retoma desde ahí
+      if (Math.abs(cinta.scrollLeft - aplicado) > 1.5) pos = cinta.scrollLeft;
+
+      // red de seguridad: si un pointerup se perdió, la cinta no se queda trabada
+      if (quieta && sueltaEn && t > sueltaEn) quieta = false;
+
+      if (!quieta && !document.hidden && !reduce.matches && dt > 0) {
+        pos += VELOCIDAD * dt;
+        envolver();
+        cinta.scrollLeft = pos;
+        aplicado = cinta.scrollLeft;
+      } else {
+        envolver();
+      }
       requestAnimationFrame(cuadro);
     }
     requestAnimationFrame(cuadro);
-    cinta.addEventListener("scroll", acomodar, { passive:true });
 
-    var frenar  = function(){ quieta = true;  };
-    var soltar  = function(){ quieta = false; };
+    var frenar  = function(){ quieta = true;  sueltaEn = performance.now() + 4000; };
+    var soltar  = function(){ quieta = false; sueltaEn = 0; };
     cinta.addEventListener("mouseenter", frenar);
     cinta.addEventListener("mouseleave", soltar);
     cinta.addEventListener("pointerdown", frenar);
@@ -3288,7 +3364,12 @@ footer{
         y = Math.max(-lim, Math.min(lim, y));
       }
 
+      // un toque limpio sobre la foto sin zoom también cierra: la X sola
+      // resultaba difícil de atinar en celular
+      var tx = 0, ty = 0, recorrido = 0;
+
       lienzo.addEventListener("pointerdown", function(e){
+        if (dedos.size === 0) { tx = e.clientX; ty = e.clientY; recorrido = 0; }
         dedos.set(e.pointerId, { x:e.clientX, y:e.clientY });
         lienzo.setPointerCapture(e.pointerId);
         if (dedos.size === 2) { d0 = distancia(); e0 = escala; }
@@ -3306,11 +3387,14 @@ footer{
           px = e.clientX; py = e.clientY;
           limitar(); pintar();
         }
+        recorrido = Math.max(recorrido, Math.hypot(e.clientX - tx, e.clientY - ty));
       });
       function levantar(e){
+        var solo = dedos.size === 1;
         dedos.delete(e.pointerId);
         if (dedos.size < 2) d0 = 0;
         if (dedos.size === 0) moviendo = false;
+        if (solo && dedos.size === 0 && escala === 1 && recorrido < 10) cerrarVisor();
       }
       lienzo.addEventListener("pointerup", levantar);
       lienzo.addEventListener("pointercancel", levantar);
