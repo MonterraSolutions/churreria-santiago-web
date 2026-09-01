@@ -361,6 +361,17 @@ h1,h2,h3{
   .nav-ig{ padding:9px 15px; }
 }
 
+/* backdrop-filter convierte a #nav en bloque contenedor de sus hijos
+   position:fixed: el overlay del menú, con inset:0, se resolvía contra la
+   barra de 84px en vez de contra la pantalla. En el hero no pasaba porque
+   ahí la barra todavía no tiene .scrolled. Mientras el menú está abierto
+   se retira el filtro; el overlay opaco cubre todo de todas formas. */
+#nav.scrolled.menu-open{
+  background:transparent;
+  box-shadow:none;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
 #nav.scrolled{
   background:rgba(251,247,239,.86);
   backdrop-filter:blur(16px);
@@ -750,31 +761,44 @@ section{ position:relative; }
 /* En celular las pestañas se quedan pegadas bajo la barra: la carta es
    larguísima y obligaba a subir hasta arriba para cambiar de sección.
    Se vuelven una sola fila deslizable para no comerse media pantalla. */
+/* En celular las pestañas se cambian por un desplegable nativo: deslizar
+   una fila a los lados no se entiende, y el selector del sistema sí. */
+.menu-selector{ display:none; }
 @media (max-width: 700px){
-  .menu-tabs{
+  .menu-tabs{ display:none; }
+  .menu-selector{
+    display:block;
     position:sticky;
-    top:var(--barra, 74px);
+    top:68px;
     z-index:80;
-    flex-wrap:nowrap;
-    overflow-x:auto;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-    gap:9px;
     margin-left:calc(-1 * var(--pad-lateral, 22px));
     margin-right:calc(-1 * var(--pad-lateral, 22px));
     padding:11px var(--pad-lateral, 22px);
-    background:rgba(247,241,230,.94);
+    background:rgba(247,241,230,.95);
     -webkit-backdrop-filter:blur(12px);
     backdrop-filter:blur(12px);
     border-bottom:1px solid rgba(92,73,54,.14);
   }
-  .menu-tabs::-webkit-scrollbar{ display:none; }
-  .menu-tab{
-    flex:0 0 auto;
-    min-width:0;
-    padding:11px 19px;
-    font-size:14.5px;
+  .menu-selector select{
+    -webkit-appearance:none;
+    appearance:none;
+    width:100%;
+    padding:15px 46px 15px 20px;
+    border-radius:100px;
+    border:1.5px solid rgba(172,110,69,.4);
+    background:var(--cream-soft);
+    color:var(--cocoa);
+    font-family:var(--font-sans);
+    font-size:16px;      /* 16px evita que iOS haga zoom al enfocarlo */
+    font-weight:600;
+    cursor:pointer;
+    /* flechita dibujada, para no depender de la del sistema */
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23AC6E45' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 18px center;
+    background-size:19px;
   }
+  .menu-selector select:focus-visible{ outline:3px solid var(--caramel); outline-offset:2px; }
 }
 .menu-tab{
   flex:1 1 0;
@@ -1084,7 +1108,8 @@ section{ position:relative; }
 .visor{
   position:fixed;
   inset:0;
-  z-index:200;
+  /* la barra vive en z-index 900 y tapaba la X del visor */
+  z-index:1000;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -1117,14 +1142,15 @@ section{ position:relative; }
   user-select:none;
   -webkit-user-drag:none;
 }
+/* el marco se ajusta al tamaño de la foto, así la X queda en su esquina
+   y no en la del teléfono, donde chocaba con la barra del navegador */
+.visor-marco{ position:relative; display:inline-flex; }
 .visor-cerrar{
   position:absolute;
-  /* se respeta la muesca del teléfono: pegada a top:14 quedaba debajo de
-     la barra de estado y era casi imposible atinarle */
-  top:calc(env(safe-area-inset-top, 0px) + clamp(14px,2.4vw,26px));
-  right:calc(env(safe-area-inset-right, 0px) + clamp(14px,2.4vw,26px));
+  top:10px;
+  right:10px;
   z-index:3;
-  width:52px; height:52px;
+  width:46px; height:46px;
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -1139,7 +1165,7 @@ section{ position:relative; }
   transition:background .3s ease, border-color .3s ease, transform .3s ease;
 }
 @media (max-width: 700px){
-  .visor-cerrar{ width:56px; height:56px; }
+  .visor-cerrar{ width:50px; height:50px; top:8px; right:8px; }
 }
 .visor-cerrar:hover{ background:rgba(255,255,255,.16); border-color:#fff; transform:scale(1.06); }
 .visor-cerrar svg{ width:22px; height:22px; }
@@ -1758,6 +1784,44 @@ body.visor-abierto{ overflow:hidden; }
   min-height:224px;
   position:relative;
 }
+/* fachada del mapa: se dibuja con CSS, pesa cero y aparece al instante */
+.mapa-fachada{
+  position:absolute;
+  inset:0;
+  width:100%;
+  border:0;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:26px;
+  text-align:center;
+  color:var(--cocoa);
+  background:
+    linear-gradient(135deg, rgba(172,110,69,.07), rgba(31,63,134,.07)),
+    repeating-linear-gradient(0deg,  rgba(92,73,54,.09) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(90deg, rgba(92,73,54,.09) 0 1px, transparent 1px 34px),
+    var(--cream-soft);
+  transition:background-color .3s ease;
+}
+.mapa-pin{ color:var(--talavera); }
+.mapa-pin svg{ width:38px; height:38px; }
+.mapa-fachada b{ font-size:16.5px; font-weight:700; }
+.mapa-sub{ font-size:13.5px; color:var(--cocoa-soft); }
+.mapa-btn{
+  margin-top:9px;
+  padding:11px 24px;
+  border-radius:100px;
+  background:var(--caramel);
+  color:#fff;
+  font-size:14px;
+  font-weight:600;
+  transition:background .3s ease;
+}
+.mapa-fachada:hover .mapa-btn{ background:var(--caramel-dk); }
+.mapa-fachada:focus-visible{ outline:3px solid var(--talavera); outline-offset:-3px; }
 .ubicacion-map iframe{
   position:absolute;
   inset:0;
@@ -1974,6 +2038,19 @@ footer{
 @media (max-width: 540px){
   .footer-grid{ grid-template-columns:1fr; }
 }
+/* En una sola columna el texto alineado a la izquierda se lee como vista
+   de escritorio encogida; centrado se siente hecho para el teléfono. */
+@media (max-width: 700px){
+  .footer-grid{ text-align:center; }
+  .footer-brand{ display:flex; flex-direction:column; align-items:center; }
+  .footer-brand p{ max-width:34ch; }
+  .footer-col .footer-contact,
+  .footer-col .footer-social a{ justify-content:center; }
+  .footer-social{ align-items:center; }
+  .footer-horario li{ justify-content:center; gap:10px; }
+  .footer-horario li b::after{ content:" ·"; color:rgba(247,241,230,.35); }
+  .footer-col a:hover{ padding-left:0; }
+}
 
 /* ============ REDUCED MOTION ============ */
 @media (prefers-reduced-motion: reduce){
@@ -2067,6 +2144,16 @@ footer{
       <button class="menu-tab" role="tab" aria-selected="false" aria-controls="panel-churros" data-panel="panel-churros">Churros</button>
       <button class="menu-tab" role="tab" aria-selected="false" aria-controls="panel-postres" data-panel="panel-postres">Postres</button>
       <button class="menu-tab" role="tab" aria-selected="false" aria-controls="panel-bebidas" data-panel="panel-bebidas">Bebidas</button>
+    </div>
+    <!-- mismo control que las pestañas, pero en desplegable: sólo se ve en celular -->
+    <div class="menu-selector">
+      <select id="menuSelect" aria-label="Categoría del menú">
+        <option value="panel-desayunos" selected>Desayunos</option>
+        <option value="panel-comida">Comida</option>
+        <option value="panel-churros">Churros</option>
+        <option value="panel-postres">Postres</option>
+        <option value="panel-bebidas">Bebidas</option>
+      </select>
     </div>
 
     <!-- 01 · Desayunos -->
@@ -2867,12 +2954,15 @@ footer{
       </div>
 
       <div class="ubicacion-map" data-reveal style="--d:.15s">
-        <iframe
-          src="https://www.google.com/maps?q=Ignacio%20Zaragoza%20110%2C%20Centro%20de%20Santiago%2C%2067370%20Santiago%2C%20Nuevo%20Le%C3%B3n&output=embed"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="Mapa — La Churrería Santiago"
-          allowfullscreen></iframe>
+        <button type="button" class="mapa-fachada" id="mapaFachada"
+                aria-label="Cargar el mapa interactivo de La Churrería Santiago">
+          <span class="mapa-pin" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          </span>
+          <b>Ignacio Zaragoza #110</b>
+          <span class="mapa-sub">Centro de Santiago · Pueblo Mágico</span>
+          <span class="mapa-btn">Ver el mapa</span>
+        </button>
       </div>
     </div>
   </div>
@@ -3000,6 +3090,13 @@ footer{
 
   /* ---------- Pestañas del menú ---------- */
   var menuTabs = document.querySelectorAll(".menu-tab");
+  var menuSelect = document.getElementById("menuSelect");
+  if (menuSelect) {
+    menuSelect.addEventListener("change", function(){
+      var destino = document.querySelector('.menu-tab[data-panel="' + menuSelect.value + '"]');
+      if (destino) destino.click();
+    });
+  }
   var menuPanels = document.querySelectorAll(".menu-panel");
   menuTabs.forEach(function(tab){
     tab.addEventListener("click", function(){
@@ -3010,6 +3107,7 @@ footer{
       });
       tab.classList.add("active");
       tab.setAttribute("aria-selected", "true");
+      if (menuSelect && menuSelect.value !== tab.dataset.panel) menuSelect.value = tab.dataset.panel;
       menuPanels.forEach(function(p){
         var on = p.id === tab.dataset.panel;
         p.classList.toggle("active", on);
@@ -3118,6 +3216,22 @@ footer{
     });
   });
 
+  /* ---------- Mapa a petición ----------
+     El embed de Google pesa más de un mega y tardaba muchísimo. La fachada
+     se ve de inmediato y el mapa real sólo se pide si lo tocan. */
+  var mapaFachada = document.getElementById("mapaFachada");
+  if (mapaFachada) {
+    mapaFachada.addEventListener("click", function(){
+      var marco = document.createElement("iframe");
+      marco.src = "https://www.google.com/maps?q=Ignacio%20Zaragoza%20110%2C%20Centro%20de%20Santiago%2C%2067370%20Santiago%2C%20Nuevo%20Le%C3%B3n&output=embed";
+      marco.title = "Mapa — La Churrería Santiago";
+      marco.loading = "eager";
+      marco.referrerPolicy = "no-referrer-when-downgrade";
+      marco.allowFullscreen = true;
+      mapaFachada.replaceWith(marco);
+    }, { once:true });
+  }
+
   /* ---------- Año dinámico ---------- */
   document.getElementById("year").textContent = new Date().getFullYear();
 })();
@@ -3200,11 +3314,13 @@ footer{
 
 <!-- ============ VISOR DE FOTOS ============ -->
 <div class="visor" id="visor" role="dialog" aria-modal="true" aria-label="Foto ampliada" hidden>
-  <button class="visor-cerrar" type="button" aria-label="Cerrar foto">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-  </button>
   <div class="visor-lienzo" id="visorLienzo">
-    <img class="visor-img" id="visorImg" src="" alt="" draggable="false">
+    <div class="visor-marco">
+      <img class="visor-img" id="visorImg" src="" alt="" draggable="false">
+      <button class="visor-cerrar" type="button" aria-label="Cerrar foto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
   </div>
   <p class="visor-pie" id="visorPie"></p>
 </div>
@@ -3369,6 +3485,7 @@ footer{
       var tx = 0, ty = 0, recorrido = 0;
 
       lienzo.addEventListener("pointerdown", function(e){
+        if (e.target.closest(".visor-cerrar")) return;   // el botón se maneja solo
         if (dedos.size === 0) { tx = e.clientX; ty = e.clientY; recorrido = 0; }
         dedos.set(e.pointerId, { x:e.clientX, y:e.clientY });
         lienzo.setPointerCapture(e.pointerId);
