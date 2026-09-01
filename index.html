@@ -11,10 +11,12 @@
 <meta property="og:image" content="mural-santiaguense.jpg">
 <meta property="og:locale" content="es_MX">
 <meta property="og:site_name" content="La Churrería Santiago">
-<!-- PENDIENTE al publicar: og:url y el canonical necesitan el dominio final.
-     Sin ellos, WhatsApp y Facebook no arman bien la vista previa del enlace.
-<meta property="og:url" content="https://DOMINIO/">
-<link rel="canonical" href="https://DOMINIO/"> -->
+<!-- El dominio es www.lachurreriadesantiago.com, pero todavía no apunta
+     a este sitio (responde 404). Estas dos etiquetas se descomentan el día
+     que el DNS quede listo: apuntar el canonical a una URL que da 404 le
+     dice a Google que la página buena no existe, y eso hace daño.
+<meta property="og:url" content="https://www.lachurreriadesantiago.com/">
+<link rel="canonical" href="https://www.lachurreriadesantiago.com/"> -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="La Churrería Santiago — Churros y Almuerzos en Santiago, N.L.">
 <meta name="twitter:description" content="Churrería y cocina de casa en el centro de Santiago, Nuevo León. Desayunos, guisos regionales, churros recién hechos y chocolate caliente. Ignacio Zaragoza #110.">
@@ -52,14 +54,14 @@
     "streetAddress": "Ignacio Zaragoza 110",
     "addressLocality": "Villa de Santiago",
     "addressRegion": "Nuevo León",
-    "postalCode": "67370",
+    "postalCode": "67310",
     "addressCountry": "MX"
   },
   "hasMenu": "menu-churreria-santiago.pdf",
   "priceRange": "$$",
   "currenciesAccepted": "MXN",
   "paymentAccepted": "Efectivo, Tarjeta",
-  "hasMap": "https://www.google.com/maps/search/?api=1&query=La+Churrer%C3%ADa+Santiago%2C+Ignacio+Zaragoza+110%2C+Centro+de+Santiago%2C+67370+Santiago%2C+N.L.",
+  "hasMap": "https://maps.google.com/?cid=4318854647789597154",
   "areaServed": [
     { "@type": "City", "name": "Santiago", "containedInPlace": { "@type": "State", "name": "Nuevo León" } },
     { "@type": "City", "name": "Monterrey" }
@@ -2922,8 +2924,8 @@ footer{
         <h2>Visítanos</h2>
         <div class="info-block">
           <p class="info-label">Dirección</p>
-          <p><strong>Ignacio Zaragoza #110</strong>, Centro de Santiago, Villa de Santiago, N.L. · C.P. 67370</p>
-          <a class="btn btn-primary info-cta" href="https://www.google.com/maps/search/?api=1&query=La+Churrer%C3%ADa+Santiago%2C+Ignacio+Zaragoza+110%2C+Centro+de+Santiago%2C+67370+Santiago%2C+N.L." target="_blank" rel="noopener">Cómo llegar</a>
+          <p><strong>Ignacio Zaragoza #110</strong>, Centro de Santiago, Villa de Santiago, N.L. · C.P. 67310</p>
+          <a class="btn btn-primary info-cta" href="https://maps.google.com/?cid=4318854647789597154" target="_blank" rel="noopener">Cómo llegar</a>
         </div>
         <div class="info-block">
           <p class="info-label">Horarios</p>
@@ -3001,7 +3003,7 @@ footer{
       </div>
       <div class="footer-col footer-visitanos">
         <h4>Visítanos</h4>
-        <p>Ignacio Zaragoza #110, Centro de Santiago, Villa de Santiago, N.L. · C.P. 67370</p>
+        <p>Ignacio Zaragoza #110, Centro de Santiago, Villa de Santiago, N.L. · C.P. 67310</p>
         <ul class="footer-horario" style="margin-top:14px">
           <li><b>Lunes a viernes</b><span>9:00 am – 6:30 pm</span></li>
           <li><b>Miércoles</b><span class="cerrado">Cerrado</span></li>
@@ -3237,7 +3239,7 @@ footer{
   if (mapaFachada) {
     mapaFachada.addEventListener("click", function(){
       var marco = document.createElement("iframe");
-      marco.src = "https://www.google.com/maps?q=Ignacio%20Zaragoza%20110%2C%20Centro%20de%20Santiago%2C%2067370%20Santiago%2C%20Nuevo%20Le%C3%B3n&output=embed";
+      marco.src = "https://www.google.com/maps?q=Ignacio%20Zaragoza%20110%2C%20Centro%20de%20Santiago%2C%2067310%20Santiago%2C%20Nuevo%20Le%C3%B3n&output=embed";
       marco.title = "Mapa — La Churrería Santiago";
       marco.loading = "eager";
       marco.referrerPolicy = "no-referrer-when-downgrade";
