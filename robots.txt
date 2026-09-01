@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Documentos internos de la agencia: no deben aparecer en Google
+Disallow: /ChurreriaSantiago-Propuesta.pdf
+Disallow: /ChurreriaSantiago-Presentaci%C3%B3n.html
+
+# Al publicar, descomentar con el dominio real:
+# Sitemap: https://DOMINIO/sitemap.xml
