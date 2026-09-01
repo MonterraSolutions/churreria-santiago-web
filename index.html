@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Churrería Santiago — Churros Artesanales en el Pueblo Mágico</title>
-<meta name="description" content="Churros artesanales, chocolate caliente y tradición familiar en el corazón del Pueblo Mágico de Santiago, Nuevo León.">
+<title>La Churrería Santiago — Churros y Almuerzos en Santiago, N.L.</title>
+<meta name="description" content="Churrería y cocina de casa en el centro de Santiago, Nuevo León. Desayunos, guisos regionales, churros recién hechos y chocolate caliente. Ignacio Zaragoza #110.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="La Churrería Santiago — Churros Artesanales en el Pueblo Mágico">
-<meta property="og:description" content="Churros artesanales, chocolate caliente y tradición familiar en el corazón del Pueblo Mágico de Santiago, Nuevo León.">
+<meta property="og:title" content="La Churrería Santiago — Churros y Almuerzos en Santiago, N.L.">
+<meta property="og:description" content="Churrería y cocina de casa en el centro de Santiago, Nuevo León. Desayunos, guisos regionales, churros recién hechos y chocolate caliente. Ignacio Zaragoza #110.">
 <meta property="og:image" content="mural-santiaguense.jpg">
 <meta property="og:locale" content="es_MX">
 <meta property="og:site_name" content="La Churrería Santiago">
@@ -16,15 +16,19 @@
 <meta property="og:url" content="https://DOMINIO/">
 <link rel="canonical" href="https://DOMINIO/"> -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="La Churrería Santiago — Churros Artesanales en el Pueblo Mágico">
-<meta name="twitter:description" content="Churros artesanales, chocolate caliente y tradición familiar en el corazón del Pueblo Mágico de Santiago, Nuevo León.">
+<meta name="twitter:title" content="La Churrería Santiago — Churros y Almuerzos en Santiago, N.L.">
+<meta name="twitter:description" content="Churrería y cocina de casa en el centro de Santiago, Nuevo León. Desayunos, guisos regionales, churros recién hechos y chocolate caliente. Ignacio Zaragoza #110.">
 <meta name="twitter:image" content="mural-santiaguense.jpg">
+<meta name="author" content="La Churrería Santiago">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#231710">
 <meta name="geo.region" content="MX-NLE">
 <meta name="geo.placename" content="Villa de Santiago, Nuevo León">
 <link rel="icon" type="image/png" href="logo-transparent.png">
 <link rel="apple-touch-icon" href="logo-transparent.png">
+<!-- el fondo del hero es lo más grande de la primera pantalla; pedirlo
+     antes mejora directamente el LCP, que Google usa para posicionar -->
+<link rel="preload" as="image" href="hero-churros.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -52,6 +56,14 @@
     "addressCountry": "MX"
   },
   "hasMenu": "menu-churreria-santiago.pdf",
+  "priceRange": "$$",
+  "currenciesAccepted": "MXN",
+  "paymentAccepted": "Efectivo, Tarjeta",
+  "hasMap": "https://www.google.com/maps/search/?api=1&query=La+Churrer%C3%ADa+Santiago%2C+Ignacio+Zaragoza+110%2C+Centro+de+Santiago%2C+67370+Santiago%2C+N.L.",
+  "areaServed": [
+    { "@type": "City", "name": "Santiago", "containedInPlace": { "@type": "State", "name": "Nuevo León" } },
+    { "@type": "City", "name": "Monterrey" }
+  ],
   "sameAs": [
     "https://www.instagram.com/lachurreriadesantiago/",
     "https://www.facebook.com/share/17fNYgiaCN/"
@@ -197,7 +209,7 @@ h1,h2,h3{
   animation:logoIn .95s var(--ease-out) .1s forwards,
             logoBreathe 3.2s ease-in-out 1.3s infinite;
 }
-.preloader-logo{ width:100%; }
+.preloader-logo{ width:100%; height:auto; }
 #preloader.done .preloader-logo-wrap{
   animation:none;
   transition:transform .6s var(--ease-inout), opacity .5s ease;
@@ -292,10 +304,10 @@ h1,h2,h3{
   transition:filter .45s ease, height .45s ease;
 }
 /* separados, cada pieza usa todo el alto de la barra en vez de repartírselo */
-.nav-marca{ height:54px; }
+.nav-marca{ height:54px; width:auto; }
 /* la cola de la "g" de Santiago va dentro del PNG, así que el centro óptico
    del texto queda arriba del centro real: se baja para emparejarlo al ícono */
-.nav-texto{ height:44px; transform:translateY(4px); }
+.nav-texto{ height:44px; width:auto; transform:translateY(4px); }
 .nav-links{
   display:flex;
   align-items:center;
@@ -537,6 +549,7 @@ h1,h2,h3{
 .hero-content{ color:#fff; text-align:center; width:100%; max-width:760px; }
 .hero-logo{
   width:clamp(148px, 15vw, 196px);
+  height:auto;
   margin:0 auto 16px;
   filter:brightness(0) invert(1) drop-shadow(0 10px 30px rgba(0,0,0,.35));
 }
@@ -1854,6 +1867,7 @@ footer{
 }
 .footer-brand img{
   width:142px;
+  height:auto;
   filter:brightness(0) invert(1);
   opacity:.95;
   margin-bottom:15px;
@@ -2074,7 +2088,7 @@ footer{
     <span class="steam"></span>
     <span class="steam"></span>
     <div class="preloader-logo-wrap">
-      <img class="preloader-logo" src="logo-transparent.png" alt="La Churrería Santiago">
+      <img class="preloader-logo" src="logo-transparent.png" alt="La Churrería Santiago" width="560" height="530">
       <span class="logo-shine"></span>
     </div>
     <span class="preloader-word">Pueblo Mágico · Santiago, N.L.</span>
@@ -2085,8 +2099,8 @@ footer{
 <nav id="nav">
   <div class="container">
     <a class="nav-logo" href="#hero" aria-label="Inicio">
-      <img class="nav-marca" src="logo-marca.png" alt="" aria-hidden="true">
-      <img class="nav-texto" src="logo-texto.png" alt="La Churrería Santiago">
+      <img class="nav-marca" src="logo-marca.png" alt="" aria-hidden="true" width="220" height="218">
+      <img class="nav-texto" src="logo-texto.png" alt="La Churrería Santiago" width="640" height="302">
     </a>
     <button class="nav-burger" aria-label="Abrir menú" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -2114,7 +2128,7 @@ footer{
 
   <div class="container hero-inner">
     <div class="hero-content">
-      <img class="hero-logo" src="logo-transparent.png" alt="La Churrería Santiago">
+      <img class="hero-logo" src="logo-transparent.png" alt="La Churrería Santiago" width="560" height="530">
       <p class="hero-eyebrow">Churrería artesanal · Cocina de casa</p>
       <h1 class="hero-title">Orgullosamente<br><em>Santiaguense</em></h1>
       <p class="hero-sub">Diez años cocinando para la gente de Santiago, ahora en pleno Pueblo Mágico. Almuerzos con sazón, guisos de la región y churros recién salidos del cazo.</p>
@@ -2160,7 +2174,7 @@ footer{
     <div class="menu-panel active" id="panel-desayunos" role="tabpanel" aria-label="Desayunos">
       <div class="carta-lista">
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Huevos</h4>
+          <h3 class="lista-titulo">Huevos</h3>
           <div class="lista-item">
             <p class="li-nom">Huevos al Gusto</p>
             <p class="li-precio"><span class="pz"><b>$160</b></span></p>
@@ -2219,7 +2233,7 @@ footer{
           <p class="lista-nota">Extra de huevo $25</p>
         </div>
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Chilaquiles</h4>
+          <h3 class="lista-titulo">Chilaquiles</h3>
           <div class="lista-item">
             <p class="li-nom">Chilaquiles de Boda</p>
             <p class="li-precio"><span class="pz"><b>$195</b></span></p>
@@ -2266,7 +2280,7 @@ footer{
     <div class="menu-panel" id="panel-comida" role="tabpanel" aria-label="Comida">
       <div class="carta-lista">
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Comidas</h4>
+          <h3 class="lista-titulo">Comidas</h3>
           <div class="lista-item">
             <p class="li-nom">Platillo</p>
             <p class="li-precio"><span class="pz"><b>$195</b></span></p>
@@ -2288,7 +2302,7 @@ footer{
           <p class="lista-nota">Todos nuestros guisos están acompañados de arroz y frijoles.</p>
         </div>
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Tacos, Gorditas y Quesadillas</h4>
+          <h3 class="lista-titulo">Tacos, Gorditas y Quesadillas</h3>
           <div class="lista-item">
             <p class="li-nom">Tacos</p>
             <p class="li-precio"><span class="pz"><b>$30</b></span></p>
@@ -2315,7 +2329,7 @@ footer{
           <p class="lista-nota">Tortilla recién hecha.</p>
         </div>
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Tortas y Hamburguesas</h4>
+          <h3 class="lista-titulo">Tortas y Hamburguesas</h3>
           <div class="lista-item">
             <p class="li-nom">Torta de Arrachera</p>
             <p class="li-precio"><span class="pz"><i>Entera</i><b>$250</b></span><span class="pz"><i>Media</i><b>$170</b></span></p>
@@ -2362,7 +2376,7 @@ footer{
           </div>
         </div>
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Ensaladas</h4>
+          <h3 class="lista-titulo">Ensaladas</h3>
           <div class="lista-item">
             <p class="li-nom">Spicy Chicken</p>
             <p class="li-precio"><span class="pz"><b>$195</b></span></p>
@@ -2382,7 +2396,7 @@ footer{
           <p class="lista-nota"><b>Extras:</b> pollo extra $60 · parmesano $30 · aguacate $30 · queso panela $20 · queso rallado $20 · aceite de oliva $20 · aderezo extra $20 · champiñones $20 · fritura $20 · verdura (jícama, pepino y zanahoria) $20.</p>
         </div>
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Botanas</h4>
+          <h3 class="lista-titulo">Botanas</h3>
           <div class="lista-item">
             <p class="li-nom">Papas a la Francesa</p>
             <p class="li-precio"><span class="pz"><i>Orden</i><b>$90</b></span><span class="pz"><i>Media orden</i><b>$60</b></span></p>
@@ -2417,7 +2431,7 @@ footer{
           </div>
         </div>
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Crepas Saladas</h4>
+          <h3 class="lista-titulo">Crepas Saladas</h3>
           <div class="lista-item">
             <p class="li-nom">Crepa Azteca</p>
             <p class="li-precio"><span class="pz"><b>$175</b></span></p>
@@ -2435,7 +2449,7 @@ footer{
     <div class="menu-panel" id="panel-churros" role="tabpanel" aria-label="Churros">
       <div class="carta-lista">
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Churros</h4>
+          <h3 class="lista-titulo">Churros</h3>
           <div class="lista-item">
             <p class="li-nom">Churro Sencillo</p>
             <p class="li-precio"><span class="pz"><b>$25</b></span></p>
@@ -2479,7 +2493,7 @@ footer{
     <div class="menu-panel" id="panel-postres" role="tabpanel" aria-label="Postres">
       <div class="carta-lista">
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Postres</h4>
+          <h3 class="lista-titulo">Postres</h3>
           <div class="lista-item">
             <p class="li-nom">Bola de Nieve</p>
             <p class="li-precio"><span class="pz"><b>$40</b></span></p>
@@ -2534,7 +2548,7 @@ footer{
     <div class="menu-panel" id="panel-bebidas" role="tabpanel" aria-label="Bebidas">
       <div class="carta-lista">
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Café Americano Gourmet</h4>
+          <h3 class="lista-titulo">Café Americano Gourmet</h3>
           <div class="lista-item">
             <p class="li-nom">Regular</p>
             <p class="li-precio"><span class="pz"><b>$40</b></span></p>
@@ -2556,7 +2570,7 @@ footer{
           <p class="lista-nota"><b>Esencias:</b> avellana · almendra · amaretto · crema irlandesa · vainilla francesa · caramelo.</p>
         </div>
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Capuccino Caliente</h4>
+          <h3 class="lista-titulo">Capuccino Caliente</h3>
           <div class="lista-item">
             <p class="li-nom">Clásico</p>
             <p class="li-precio"><span class="pz"><b>$60</b></span></p>
@@ -2591,7 +2605,7 @@ footer{
           </div>
         </div>
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Chocolates y Té</h4>
+          <h3 class="lista-titulo">Chocolates y Té</h3>
           <div class="lista-item">
             <p class="li-nom">Chocolate Español</p>
             <p class="li-precio"><span class="pz"><b>$45</b></span></p>
@@ -2609,7 +2623,7 @@ footer{
           </div>
         </div>
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Bebidas Frappé</h4>
+          <h3 class="lista-titulo">Bebidas Frappé</h3>
           <div class="lista-item">
             <p class="li-nom">Clásico</p>
             <p class="li-precio"><span class="pz"><b>$70</b></span></p>
@@ -2644,7 +2658,7 @@ footer{
           </div>
         </div>
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Sodas Italianas</h4>
+          <h3 class="lista-titulo">Sodas Italianas</h3>
           <div class="lista-item">
             <p class="li-nom">Mango</p>
             <p class="li-precio"><span class="pz"><b>$65</b></span></p>
@@ -2663,7 +2677,7 @@ footer{
           </div>
         </div>
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Malteadas y Smoothies</h4>
+          <h3 class="lista-titulo">Malteadas y Smoothies</h3>
           <div class="lista-item">
             <p class="li-nom">Malteada de Vainilla</p>
             <p class="li-precio"><span class="pz"><b>$65</b></span></p>
@@ -2686,7 +2700,7 @@ footer{
           </div>
         </div>
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Jugos</h4>
+          <h3 class="lista-titulo">Jugos</h3>
           <div class="lista-item">
             <p class="li-nom">Naranja</p>
             <p class="li-precio"><span class="pz"><b>$70</b></span></p>
@@ -2706,7 +2720,7 @@ footer{
           </div>
         </div>
         <div class="lista-bloque">
-          <h4 class="lista-titulo">Refrescos y Aguas</h4>
+          <h3 class="lista-titulo">Refrescos y Aguas</h3>
           <div class="lista-item">
             <p class="li-nom">Refresco</p>
             <p class="li-precio"><span class="pz"><b>$40</b></span></p>
@@ -2764,82 +2778,82 @@ footer{
   <div class="galeria-cinta">
     <div class="galeria-pista">
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-01.jpg" data-pie="Cono de churros tradicionales" aria-label="Ampliar foto: Cono de churros tradicionales">
-          <img src="galeria/foto-01.jpg" alt="Cono de churros tradicionales" decoding="async">
+          <img loading="lazy" src="galeria/foto-01.jpg" alt="Cono de churros tradicionales" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-02.jpg" data-pie="Mini churros bañados con chocolate" aria-label="Ampliar foto: Mini churros bañados con chocolate">
-          <img src="galeria/foto-02.jpg" alt="Mini churros bañados con chocolate" decoding="async">
+          <img loading="lazy" src="galeria/foto-02.jpg" alt="Mini churros bañados con chocolate" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-03.jpg" data-pie="Enchiladas verdes con fruta fresca en el jardín" aria-label="Ampliar foto: Enchiladas verdes con fruta fresca en el jardín">
-          <img src="galeria/foto-03.jpg" alt="Enchiladas verdes con fruta fresca en el jardín" decoding="async">
+          <img loading="lazy" src="galeria/foto-03.jpg" alt="Enchiladas verdes con fruta fresca en el jardín" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-04.jpg" data-pie="Ensalada fresca con pollo y queso en plato de talavera" aria-label="Ampliar foto: Ensalada fresca con pollo y queso en plato de talavera">
-          <img src="galeria/foto-04.jpg" alt="Ensalada fresca con pollo y queso en plato de talavera" decoding="async">
+          <img loading="lazy" src="galeria/foto-04.jpg" alt="Ensalada fresca con pollo y queso en plato de talavera" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-05.jpg" data-pie="Chocolate caliente con crema batida en taza de talavera" aria-label="Ampliar foto: Chocolate caliente con crema batida en taza de talavera">
-          <img src="galeria/foto-05.jpg" alt="Chocolate caliente con crema batida en taza de talavera" loading="lazy" decoding="async">
+          <img src="galeria/foto-05.jpg" alt="Chocolate caliente con crema batida en taza de talavera" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-06.jpg" data-pie="Fachada de la casa en el centro de Santiago" aria-label="Ampliar foto: Fachada de la casa en el centro de Santiago">
-          <img src="galeria/foto-06.jpg" alt="Fachada de la casa en el centro de Santiago" loading="lazy" decoding="async">
+          <img src="galeria/foto-06.jpg" alt="Fachada de la casa en el centro de Santiago" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-07.jpg" data-pie="Waffles con fresas y lechera" aria-label="Ampliar foto: Waffles con fresas y lechera">
-          <img src="galeria/foto-07.jpg" alt="Waffles con fresas y lechera" loading="lazy" decoding="async">
+          <img src="galeria/foto-07.jpg" alt="Waffles con fresas y lechera" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-09.jpg" data-pie="Churros con chocolate caliente para remojar" aria-label="Ampliar foto: Churros con chocolate caliente para remojar">
-          <img src="galeria/foto-09.jpg" alt="Churros con chocolate caliente para remojar" loading="lazy" decoding="async">
+          <img src="galeria/foto-09.jpg" alt="Churros con chocolate caliente para remojar" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-10.jpg" data-pie="Torta al horno con papas de la casa" aria-label="Ampliar foto: Torta al horno con papas de la casa">
-          <img src="galeria/foto-10.jpg" alt="Torta al horno con papas de la casa" loading="lazy" decoding="async">
+          <img src="galeria/foto-10.jpg" alt="Torta al horno con papas de la casa" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-11.jpg" data-pie="Pay de nuez con crema y caramelo" aria-label="Ampliar foto: Pay de nuez con crema y caramelo">
-          <img src="galeria/foto-11.jpg" alt="Pay de nuez con crema y caramelo" loading="lazy" decoding="async">
+          <img src="galeria/foto-11.jpg" alt="Pay de nuez con crema y caramelo" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-12.jpg" data-pie="Churros rellenos en cono" aria-label="Ampliar foto: Churros rellenos en cono">
-          <img src="galeria/foto-12.jpg" alt="Churros rellenos en cono" loading="lazy" decoding="async">
+          <img src="galeria/foto-12.jpg" alt="Churros rellenos en cono" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-13.jpg" data-pie="Puerco en salsa verde sobre chilaquiles, en plato de talavera" aria-label="Ampliar foto: Puerco en salsa verde sobre chilaquiles, en plato de talavera">
-          <img src="galeria/foto-13.jpg" alt="Puerco en salsa verde sobre chilaquiles, en plato de talavera" loading="lazy" decoding="async">
+          <img src="galeria/foto-13.jpg" alt="Puerco en salsa verde sobre chilaquiles, en plato de talavera" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-14.jpg" data-pie="Pasillo con el mural «Orgullosamente Santiaguense»" aria-label="Ampliar foto: Pasillo con el mural «Orgullosamente Santiaguense»">
-          <img src="galeria/foto-14.jpg" alt="Pasillo con el mural «Orgullosamente Santiaguense»" loading="lazy" decoding="async">
+          <img src="galeria/foto-14.jpg" alt="Pasillo con el mural «Orgullosamente Santiaguense»" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-01.jpg" data-pie="Cono de churros tradicionales" aria-hidden="true" tabindex="-1">
-          <img src="galeria/foto-01.jpg" alt="" loading="lazy" decoding="async">
+          <img src="galeria/foto-01.jpg" alt="" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-02.jpg" data-pie="Mini churros bañados con chocolate" aria-hidden="true" tabindex="-1">
-          <img src="galeria/foto-02.jpg" alt="" loading="lazy" decoding="async">
+          <img src="galeria/foto-02.jpg" alt="" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-03.jpg" data-pie="Enchiladas verdes con fruta fresca en el jardín" aria-hidden="true" tabindex="-1">
-          <img src="galeria/foto-03.jpg" alt="" loading="lazy" decoding="async">
+          <img src="galeria/foto-03.jpg" alt="" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-04.jpg" data-pie="Ensalada fresca con pollo y queso en plato de talavera" aria-hidden="true" tabindex="-1">
-          <img src="galeria/foto-04.jpg" alt="" loading="lazy" decoding="async">
+          <img src="galeria/foto-04.jpg" alt="" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-05.jpg" data-pie="Chocolate caliente con crema batida en taza de talavera" aria-hidden="true" tabindex="-1">
-          <img src="galeria/foto-05.jpg" alt="" loading="lazy" decoding="async">
+          <img src="galeria/foto-05.jpg" alt="" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-06.jpg" data-pie="Fachada de la casa en el centro de Santiago" aria-hidden="true" tabindex="-1">
-          <img src="galeria/foto-06.jpg" alt="" loading="lazy" decoding="async">
+          <img src="galeria/foto-06.jpg" alt="" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-07.jpg" data-pie="Waffles con fresas y lechera" aria-hidden="true" tabindex="-1">
-          <img src="galeria/foto-07.jpg" alt="" loading="lazy" decoding="async">
+          <img src="galeria/foto-07.jpg" alt="" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-09.jpg" data-pie="Churros con chocolate caliente para remojar" aria-hidden="true" tabindex="-1">
-          <img src="galeria/foto-09.jpg" alt="" loading="lazy" decoding="async">
+          <img src="galeria/foto-09.jpg" alt="" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-10.jpg" data-pie="Torta al horno con papas de la casa" aria-hidden="true" tabindex="-1">
-          <img src="galeria/foto-10.jpg" alt="" loading="lazy" decoding="async">
+          <img src="galeria/foto-10.jpg" alt="" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-11.jpg" data-pie="Pay de nuez con crema y caramelo" aria-hidden="true" tabindex="-1">
-          <img src="galeria/foto-11.jpg" alt="" loading="lazy" decoding="async">
+          <img src="galeria/foto-11.jpg" alt="" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-12.jpg" data-pie="Churros rellenos en cono" aria-hidden="true" tabindex="-1">
-          <img src="galeria/foto-12.jpg" alt="" loading="lazy" decoding="async">
+          <img src="galeria/foto-12.jpg" alt="" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-13.jpg" data-pie="Puerco en salsa verde sobre chilaquiles, en plato de talavera" aria-hidden="true" tabindex="-1">
-          <img src="galeria/foto-13.jpg" alt="" loading="lazy" decoding="async">
+          <img src="galeria/foto-13.jpg" alt="" loading="lazy" decoding="async" width="720" height="720">
         </button>
         <button type="button" class="galeria-foto" data-grande="galeria/grande/foto-14.jpg" data-pie="Pasillo con el mural «Orgullosamente Santiaguense»" aria-hidden="true" tabindex="-1">
-          <img src="galeria/foto-14.jpg" alt="" loading="lazy" decoding="async">
+          <img src="galeria/foto-14.jpg" alt="" loading="lazy" decoding="async" width="720" height="720">
         </button>
     </div>
   </div>
@@ -2974,7 +2988,7 @@ footer{
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="logo-transparent.png" alt="La Churrería Santiago">
+        <img src="logo-transparent.png" alt="La Churrería Santiago" width="560" height="530">
         <p>Churros artesanales y tradición familiar en el corazón del Pueblo Mágico de Santiago, Nuevo León.</p>
       </div>
       <div class="footer-col">

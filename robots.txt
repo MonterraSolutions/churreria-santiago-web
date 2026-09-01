@@ -5,5 +5,5 @@ Allow: /
 Disallow: /ChurreriaSantiago-Propuesta.pdf
 Disallow: /ChurreriaSantiago-Presentaci%C3%B3n.html
 
-# Al publicar, descomentar con el dominio real:
-# Sitemap: https://DOMINIO/sitemap.xml
+# Al mudar a dominio propio hay que actualizar esta línea
+Sitemap: https://monterrasolutions.github.io/churreria-santiago-web/sitemap.xml
