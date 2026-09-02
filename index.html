@@ -480,6 +480,9 @@ h1,h2,h3{
   /* alto del difuminado del pie; el DESLIZA se coloca a partir de aquí */
   --difuminado:clamp(78px, 10.5vh, 148px);
   position:relative;
+  /* el respaldo va primero: quien no entiende svh se queda con vh, y quien
+     sí lo entiende pisa la línea de arriba. Más confiable que @supports. */
+  min-height:100vh;
   min-height:100svh;
   overflow:hidden;
   display:flex;
@@ -553,7 +556,10 @@ h1,h2,h3{
   width:clamp(148px, 15vw, 196px);
   height:auto;
   margin:0 auto 16px;
-  filter:brightness(0) invert(1) drop-shadow(0 10px 30px rgba(0,0,0,.35));
+  /* usa el PNG que ya viene blanco. Con brightness(0) invert(1) el navegador
+     pintaba el logo a color y después lo blanqueaba, y en celular se
+     alcanzaba a ver ese cambio de color al entrar a la página. */
+  filter:drop-shadow(0 10px 30px rgba(0,0,0,.35));
 }
 .hero-eyebrow{
   font-size:12px;
@@ -602,12 +608,10 @@ body.ready .hero-content > *{ opacity:1; transform:translateY(0); }
     /* svh = alto de pantalla con las barras del navegador visibles.
        Con 100vh el celular calcula de más y la primera pantalla queda
        cortada; con svh entra completa siempre. */
+    min-height:100vh;
     min-height:100svh;
     padding:clamp(96px, 12vh, 128px) 0 clamp(64px, 8vh, 92px);
   }
-}
-@supports not (min-height: 100svh){
-  @media (max-width: 980px){ #hero{ min-height:100vh; } }
 }
 body.ready .hero-content > :nth-child(1){ transition-delay:.15s; }
 body.ready .hero-content > :nth-child(2){ transition-delay:.3s; }
@@ -1830,44 +1834,6 @@ body.visor-abierto{ overflow:hidden; }
   min-height:224px;
   position:relative;
 }
-/* fachada del mapa: se dibuja con CSS, pesa cero y aparece al instante */
-.mapa-fachada{
-  position:absolute;
-  inset:0;
-  width:100%;
-  border:0;
-  cursor:pointer;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:7px;
-  padding:26px;
-  text-align:center;
-  color:var(--cocoa);
-  background:
-    linear-gradient(135deg, rgba(172,110,69,.07), rgba(31,63,134,.07)),
-    repeating-linear-gradient(0deg,  rgba(92,73,54,.09) 0 1px, transparent 1px 34px),
-    repeating-linear-gradient(90deg, rgba(92,73,54,.09) 0 1px, transparent 1px 34px),
-    var(--cream-soft);
-  transition:background-color .3s ease;
-}
-.mapa-pin{ color:var(--talavera); }
-.mapa-pin svg{ width:38px; height:38px; }
-.mapa-fachada b{ font-size:16.5px; font-weight:700; }
-.mapa-sub{ font-size:13.5px; color:var(--cocoa-soft); }
-.mapa-btn{
-  margin-top:9px;
-  padding:11px 24px;
-  border-radius:100px;
-  background:var(--caramel);
-  color:#fff;
-  font-size:14px;
-  font-weight:600;
-  transition:background .3s ease;
-}
-.mapa-fachada:hover .mapa-btn{ background:var(--caramel-dk); }
-.mapa-fachada:focus-visible{ outline:3px solid var(--talavera); outline-offset:-3px; }
 .ubicacion-map iframe{
   position:absolute;
   inset:0;
@@ -1901,7 +1867,6 @@ footer{
 .footer-brand img{
   width:142px;
   height:auto;
-  filter:brightness(0) invert(1);
   opacity:.95;
   margin-bottom:15px;
 }
@@ -2161,7 +2126,7 @@ footer{
 
   <div class="container hero-inner">
     <div class="hero-content">
-      <img class="hero-logo" src="logo-transparent.png" alt="La Churrería Santiago" width="560" height="530">
+      <img class="hero-logo" src="logo-blanco.png" alt="La Churrería Santiago" width="560" height="530">
       <p class="hero-eyebrow">Churrería artesanal · Cocina de casa</p>
       <h1 class="hero-title">Orgullosamente<br><em>Santiaguense</em></h1>
       <p class="hero-sub">Diez años cocinando para la gente de Santiago, ahora en pleno Pueblo Mágico. Almuerzos con sazón, guisos de la región y churros recién salidos del cazo.</p>
@@ -3004,15 +2969,12 @@ footer{
       </div>
 
       <div class="ubicacion-map" data-reveal style="--d:.15s">
-        <button type="button" class="mapa-fachada" id="mapaFachada"
-                aria-label="Cargar el mapa interactivo de La Churrería Santiago">
-          <span class="mapa-pin" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
-          </span>
-          <b>Ignacio Zaragoza #110</b>
-          <span class="mapa-sub">Centro de Santiago · Pueblo Mágico</span>
-          <span class="mapa-btn">Ver el mapa</span>
-        </button>
+        <iframe
+          src="https://www.google.com/maps?q=Ignacio%20Zaragoza%20110%2C%20Centro%20de%20Santiago%2C%2067310%20Santiago%2C%20Nuevo%20Le%C3%B3n&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Mapa — La Churrería Santiago"
+          allowfullscreen></iframe>
       </div>
     </div>
   </div>
@@ -3024,7 +2986,7 @@ footer{
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="logo-transparent.png" alt="La Churrería Santiago" width="560" height="530">
+        <img src="logo-blanco.png" alt="La Churrería Santiago" width="560" height="530">
         <p>Churros artesanales y tradición familiar en el corazón del Pueblo Mágico de Santiago, Nuevo León.</p>
       </div>
       <div class="footer-col">
@@ -3268,22 +3230,6 @@ footer{
       }
     });
   });
-
-  /* ---------- Mapa a petición ----------
-     El embed de Google pesa más de un mega y tardaba muchísimo. La fachada
-     se ve de inmediato y el mapa real sólo se pide si lo tocan. */
-  var mapaFachada = document.getElementById("mapaFachada");
-  if (mapaFachada) {
-    mapaFachada.addEventListener("click", function(){
-      var marco = document.createElement("iframe");
-      marco.src = "https://www.google.com/maps?q=Ignacio%20Zaragoza%20110%2C%20Centro%20de%20Santiago%2C%2067310%20Santiago%2C%20Nuevo%20Le%C3%B3n&output=embed";
-      marco.title = "Mapa — La Churrería Santiago";
-      marco.loading = "eager";
-      marco.referrerPolicy = "no-referrer-when-downgrade";
-      marco.allowFullscreen = true;
-      mapaFachada.replaceWith(marco);
-    }, { once:true });
-  }
 
   /* ---------- Año dinámico ---------- */
   document.getElementById("year").textContent = new Date().getFullYear();
