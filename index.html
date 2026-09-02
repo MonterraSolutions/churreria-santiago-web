@@ -3086,7 +3086,10 @@ footer{
 
   /* ---------- Preloader ---------- */
   var preloader = document.getElementById("preloader");
-  var MIN_TIME = 950;    // tiempo mínimo en pantalla
+  var MIN_TIME = 1450;   // tiempo mínimo en pantalla
+                         // el logo tarda 1.05s en terminar de entrar
+                         // (logoIn dura .95s con .1s de retraso); por debajo
+                         // de eso el intro se iba antes de que se viera
   var start = performance.now();
 
   function hidePreloader(){
