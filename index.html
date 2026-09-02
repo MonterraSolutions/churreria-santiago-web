@@ -3512,21 +3512,22 @@ footer{
         return Math.hypot(v[0].x - v[1].x, v[0].y - v[1].y);
       }
       function limitar(){
-        var lim = Math.max(0, (escala - 1) * 260);
-        x = Math.max(-lim, Math.min(lim, x));
-        y = Math.max(-lim, Math.min(lim, y));
+        var lx = Math.max(0, (img.offsetWidth  * escala - lienzo.clientWidth ) / 2);
+        var ly = Math.max(0, (img.offsetHeight * escala - lienzo.clientHeight) / 2);
+        x = Math.max(-lx, Math.min(lx, x));
+        y = Math.max(-ly, Math.min(ly, y));
       }
 
       // un toque limpio sobre la foto sin zoom también cierra: la X sola
       // resultaba difícil de atinar en celular
-      var tx = 0, ty = 0, recorrido = 0;
+      var tx = 0, ty = 0, recorrido = 0, huboPellizco = false, ultimo = 0;
 
       lienzo.addEventListener("pointerdown", function(e){
         if (e.target.closest(".visor-cerrar")) return;   // el botón se maneja solo
         if (dedos.size === 0) { tx = e.clientX; ty = e.clientY; recorrido = 0; }
         dedos.set(e.pointerId, { x:e.clientX, y:e.clientY });
         lienzo.setPointerCapture(e.pointerId);
-        if (dedos.size === 2) { d0 = distancia(); e0 = escala; }
+        if (dedos.size === 2) { d0 = distancia(); e0 = escala; huboPellizco = true; }
         else if (dedos.size === 1 && escala > 1) { moviendo = true; px = e.clientX; py = e.clientY; }
       });
       lienzo.addEventListener("pointermove", function(e){
@@ -3544,11 +3545,29 @@ footer{
         recorrido = Math.max(recorrido, Math.hypot(e.clientX - tx, e.clientY - ty));
       });
       function levantar(e){
-        var solo = dedos.size === 1;
         dedos.delete(e.pointerId);
         if (dedos.size < 2) d0 = 0;
-        if (dedos.size === 0) moviendo = false;
-        if (solo && dedos.size === 0 && escala === 1 && recorrido < 10) cerrarVisor();
+        if (dedos.size !== 0) return;        // todavía queda algún dedo abajo
+        moviendo = false;
+
+        /* Al soltar un pellizco se levantan los dos dedos, o sea dos
+           pointerup casi seguidos. Antes eso se leía como doble toque y
+           deshacía el zoom apenas soltabas. Un gesto de dos dedos, o uno
+           que recorrió distancia, nunca cuenta como toque. */
+        var fueGesto = huboPellizco || recorrido >= 10;
+        huboPellizco = false;
+        if (fueGesto) { ultimo = 0; return; }
+
+        var ahora = Date.now();
+        if (ahora - ultimo < 300) {          // doble toque
+          if (escala > 1) reiniciar();
+          else { escala = 2.4; pintar(); }
+          ultimo = 0;
+          return;
+        }
+        ultimo = ahora;
+        // un toque limpio sobre la foto sin zoom cierra; con zoom no estorba
+        if (escala === 1) cerrarVisor();
       }
       lienzo.addEventListener("pointerup", levantar);
       lienzo.addEventListener("pointercancel", levantar);
@@ -3560,16 +3579,6 @@ footer{
         if (escala === 1) { x = 0; y = 0; }
         limitar(); pintar();
       }, { passive:false });
-
-      var ultimo = 0;
-      lienzo.addEventListener("pointerup", function(){
-        var ahora = Date.now();
-        if (ahora - ultimo < 300) {
-          if (escala > 1) reiniciar();
-          else { escala = 2.4; pintar(); }
-        }
-        ultimo = ahora;
-      });
     }
   }
 })();
