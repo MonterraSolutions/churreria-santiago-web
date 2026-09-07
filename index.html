@@ -555,7 +555,8 @@ h1,h2,h3{
 .hero-logo{
   width:clamp(148px, 15vw, 196px);
   height:auto;
-  margin:0 auto 16px;
+  /* sin el antetítulo, el logo queda pegado al título: se abre el hueco */
+  margin:0 auto 26px;
   /* usa el PNG que ya viene blanco. Con brightness(0) invert(1) el navegador
      pintaba el logo a color y después lo blanqueaba, y en celular se
      alcanzaba a ver ese cambio de color al entrar a la página. */
@@ -581,7 +582,7 @@ h1,h2,h3{
   color:#EFD9A8;
 }
 .hero-sub{
-  max-width:560px;
+  max-width:520px;
   margin:0 auto 34px;
   font-size:clamp(15px, 1.8vw, 17px);
   font-weight:500;
@@ -1519,39 +1520,15 @@ body.visor-abierto{ overflow:hidden; }
 }
 .historia-media:hover .photo-main img{ transform:scale(1.05); }
 /* dato destacado sobre la foto */
-.historia-stat{
-  position:absolute;
-  left:-16px;
-  bottom:30px;
-  padding:18px 26px;
-  border-radius:22px;
-  background:var(--cream-soft);
-  border:1px solid rgba(196,164,112,.45);
-  box-shadow:var(--shadow-md);
-}
-.historia-stat b{
-  display:block;
-  font-family:var(--font-serif);
-  font-size:40px;
-  font-weight:500;
-  line-height:1;
-  color:var(--caramel);
-}
-.historia-stat span{
-  display:block;
-  margin-top:6px;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--cocoa-soft);
-}
 .historia-text .eyebrow{ margin-bottom:18px; }
 .historia-text h2{
   font-size:clamp(32px, 4vw, 48px);
   margin-bottom:26px;
 }
 .historia-text h2 em{ font-style:italic; color:var(--caramel); }
+/* Udini es marca conocida en Santiago: se resalta con el color de la casa
+   para que se lea como nombre propio y no como un énfasis suelto */
+.historia-text p b{ font-weight:600; color:var(--caramel-dk); }
 .historia-text p{
   color:var(--cocoa-soft);
   font-size:16px;
@@ -1595,10 +1572,6 @@ body.visor-abierto{ overflow:hidden; }
 @media (max-width: 880px){
   .historia-grid{ grid-template-columns:1fr; }
   .historia-media{ max-width:520px; }
-}
-@media (max-width: 560px){
-  .historia-stat{ left:14px; bottom:16px; padding:14px 20px; }
-  .historia-stat b{ font-size:32px; }
 }
 
 /* ============ UBICACIÓN ============ */
@@ -2127,9 +2100,8 @@ footer{
   <div class="container hero-inner">
     <div class="hero-content">
       <img class="hero-logo" src="logo-blanco.png" alt="La Churrería Santiago" width="560" height="530">
-      <p class="hero-eyebrow">Churrería artesanal · Cocina de casa</p>
       <h1 class="hero-title">Orgullosamente<br><em>Santiaguense</em></h1>
-      <p class="hero-sub">Diez años cocinando para la gente de Santiago, ahora en pleno Pueblo Mágico. Almuerzos con sazón, guisos de la región y churros recién salidos del cazo.</p>
+      <p class="hero-sub">El sazón de nuestra familia, ahora en el centro de nuestro Pueblo Mágico.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#menu">Menú</a>
       </div>
@@ -2869,17 +2841,13 @@ footer{
         <div class="photo-main">
           <img src="mural-santiaguense.jpg" width="1620" height="2880" alt="Pasillo de La Churrería Santiago con piso de mosaico de talavera y el mural pintado en la pared que dice «Orgullosamente Santiaguense»" loading="lazy" decoding="async">
         </div>
-        <div class="historia-stat" aria-hidden="true">
-          <b>+10</b>
-          <span>Años de cocina</span>
-        </div>
       </div>
 
       <div class="historia-text" data-reveal style="--d:.15s">
         <span class="eyebrow">Nuestra Historia</span>
-        <h2>Diez años de barrio, <em>ahora en el centro</em></h2>
-        <p>Más de diez años cocinando en una de las colonias más populares de Santiago. Ahí nos hicimos un nombre, plato por plato, sirviendo a los vecinos que volvían cada mañana.</p>
-        <p>Cuando se abrió la oportunidad de mostrar nuestras raíces santiaguenses en la zona turística del pueblo, nos trajimos todo hasta la Villa de Santiago: los platillos típicos, las bebidas y la sazón completa.</p>
+        <h2>Dos décadas de sazón, <em>ahora en el centro</em></h2>
+        <p>Nuestra historia empezó hace veinte años en el restaurante <b>Udini</b>, atendiendo a las familias de Santiago. Somos la misma casa, aunque no todos lo saben.</p>
+        <p>Hace más de diez años llevamos ese mismo sazón a la gastronomía del pueblo, y hoy servimos en el centro para que los turistas nacionales e internacionales, y las familias neoleonenses, conozcan la tradición de nuestros platillos típicos y las bebidas que nos caracterizan.</p>
         <p>Aquí nos preparamos a diario para servir almuerzos con sabor. Tortillas y gorditas hechas a mano. Café recién hecho.</p>
         <blockquote class="historia-quote">“Y la experiencia siempre cierra igual: churros crujientes, recién salidos, con un chocolate caliente para remojarlos.”</blockquote>
         <p class="historia-cierre">Ese es el plan. <a href="#ubicacion">Ven por él.</a></p>
