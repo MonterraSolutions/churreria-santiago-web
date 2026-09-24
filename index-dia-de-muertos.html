@@ -47,7 +47,8 @@
   "description": "Churros artesanales, chocolate caliente y cocina de casa en el centro del Pueblo Mágico de Santiago, Nuevo León.",
   "image": "mural-santiaguense.jpg",
   "logo": "logo-transparent.png",
-  "telephone": "+528110205870",
+  "telephone": "+528110979759",
+  "email": "lgarza@udini.com.mx",
   "servesCuisine": ["Mexicana", "Churros", "Desayunos"],
   "address": {
     "@type": "PostalAddress",
@@ -1760,6 +1761,8 @@ body.visor-abierto{ overflow:hidden; }
 .info-link:hover{ color:var(--cocoa); border-color:var(--caramel); }
 .info-link svg{ width:19px; height:19px; flex-shrink:0; color:var(--caramel); }
 .info-link b{ font-variant-numeric:tabular-nums; }
+.info-link + .info-link{ margin-top:12px; }
+.info-block .info-link{ display:flex; width:fit-content; }
 
 /* el botón de mapa vive dentro del bloque de Dirección, no al pie del panel */
 .info-cta{
@@ -1931,7 +1934,8 @@ footer{
 
 /* contacto por WhatsApp */
 .footer-col .footer-contact{
-  display:inline-flex;
+  display:flex;
+  width:fit-content;
   align-items:center;
   gap:13px;
   margin-bottom:14px;
@@ -2046,6 +2050,7 @@ footer{
   .footer-brand p{ max-width:34ch; }
   .footer-col .footer-contact,
   .footer-col .footer-social a{ justify-content:center; }
+  .footer-col .footer-contact{ margin-left:auto; margin-right:auto; }
   .footer-social{ align-items:center; }
   .footer-horario li{ justify-content:center; gap:10px; }
   .footer-horario li b::after{ content:" ·"; color:rgba(247,241,230,.35); }
@@ -3355,9 +3360,13 @@ footer{
         </div>
         <div class="info-block">
           <p class="info-label">Contacto</p>
-          <a class="info-link" href="https://wa.me/528110205870" target="_blank" rel="noopener">
+          <a class="info-link" href="https://wa.me/528110979759" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.4 7.6L3.5 20.5l1.4-4.5A8.5 8.5 0 1 1 20.5 11.6z"/><path d="M9.3 9c.3-.6 1-.5 1.2 0l.5 1.2c.1.3 0 .5-.2.7l-.5.5c.5 1 1.3 1.8 2.3 2.3l.5-.5c.2-.2.4-.3.7-.2l1.2.5c.6.2.6 1 0 1.2-.5.3-1.1.4-1.7.2a7.6 7.6 0 0 1-4.2-4.2c-.2-.6-.1-1.2.2-1.7z"/></svg>
-            <b>811 020 5870</b> · WhatsApp
+            <b>811 097 9759</b> · WhatsApp
+          </a>
+          <a class="info-link" href="mailto:lgarza@udini.com.mx">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg>
+            <b>lgarza@udini.com.mx</b>
           </a>
         </div>
 
@@ -3419,11 +3428,18 @@ footer{
       </div>
       <div class="footer-col">
         <h4>Contacto</h4>
-        <a class="footer-contact" href="https://wa.me/528110205870" target="_blank" rel="noopener">
+        <a class="footer-contact" href="https://wa.me/528110979759" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.4 7.6L3.5 20.5l1.4-4.5A8.5 8.5 0 1 1 20.5 11.6z"/><path d="M9.3 9c.3-.6 1-.5 1.2 0l.5 1.2c.1.3 0 .5-.2.7l-.5.5c.5 1 1.3 1.8 2.3 2.3l.5-.5c.2-.2.4-.3.7-.2l1.2.5c.6.2.6 1 0 1.2-.5.3-1.1.4-1.7.2a7.6 7.6 0 0 1-4.2-4.2c-.2-.6-.1-1.2.2-1.7z"/></svg>
           <span>
             <small>WhatsApp</small>
-            <b>811 020 5870</b>
+            <b>811 097 9759</b>
+          </span>
+        </a>
+        <a class="footer-contact" href="mailto:lgarza@udini.com.mx">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg>
+          <span>
+            <small>Correo</small>
+            <b>lgarza@udini.com.mx</b>
           </span>
         </a>
         <ul class="footer-social">
@@ -3703,6 +3719,7 @@ footer{
   var EVENTOS = [
     { sel: '.menu-descarga .abre-visor',        nombre: "ver_menu"         },
     { sel: 'a[href^="https://wa.me/"]',         nombre: "click_whatsapp"   },
+    { sel: 'a[href^="mailto:"]',                nombre: "click_correo"     },
     { sel: 'a[href*="google.com/maps"]',        nombre: "click_como_llegar"},
     { sel: '.red, .nav-ico, .footer-social a',  nombre: "click_redes"      }
   ];
