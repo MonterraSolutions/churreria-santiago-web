@@ -1,6 +1,7 @@
 # La Churrería Santiago — configuración para Hostinger (Apache/LiteSpeed)
 
-DirectoryIndex index.html
+# index.php decide qué portada servir según la temporada (ver index.php)
+DirectoryIndex index.php index.html
 Options -Indexes
 
 # Todo a https://www. (una sola dirección para Google)
@@ -13,6 +14,14 @@ RewriteRule ^ https://www.%1%{REQUEST_URI} [L,R=301]
 # /index.html → / (evita contenido duplicado)
 RewriteCond %{THE_REQUEST} \s/index\.html[\s?] [NC]
 RewriteRule ^index\.html$ / [L,R=301]
+
+# /index.php → / (misma razón)
+RewriteCond %{THE_REQUEST} \s/index\.php[\s?] [NC]
+RewriteRule ^index\.php$ / [L,R=301]
+
+# Las portadas de temporada se ven sólo desde / (index.php las sirve en su fecha)
+RewriteCond %{THE_REQUEST} \s/index-dia-de-muertos\.html[\s?] [NC]
+RewriteRule ^index-dia-de-muertos\.html$ / [L,R=302]
 
 # Compresión
 <IfModule mod_deflate.c>
