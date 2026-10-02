@@ -1,9 +1,4 @@
 User-agent: *
 Allow: /
 
-# Documentos internos de la agencia: no deben aparecer en Google
-Disallow: /ChurreriaSantiago-Propuesta.pdf
-Disallow: /ChurreriaSantiago-Presentaci%C3%B3n.html
-
-# Al mudar a dominio propio hay que actualizar esta línea
-Sitemap: https://monterrasolutions.github.io/churreria-santiago-web/sitemap.xml
+Sitemap: https://www.lachurreriadesantiago.com/sitemap.xml
