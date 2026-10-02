@@ -22,8 +22,12 @@
 <meta name="theme-color" content="#1A0F24">
 <meta name="geo.region" content="MX-NLE">
 <meta name="geo.placename" content="Villa de Santiago, Nuevo León">
-<link rel="icon" type="image/png" href="logo-transparent.png">
-<link rel="apple-touch-icon" href="logo-transparent.png">
+<!-- ícono de la pestaña, favoritos y resultados de Google: Google lo pide
+     cuadrado y en múltiplos de 48 px; el .ico es el que buscan los navegadores -->
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" href="favicon-96.png" sizes="96x96">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <!-- el fondo del hero es lo más grande de la primera pantalla; pedirlo
      antes mejora directamente el LCP, que Google usa para posicionar -->
 <link rel="preload" as="image" href="hero-churros.jpg" fetchpriority="high">
