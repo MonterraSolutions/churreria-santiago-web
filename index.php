@@ -6,8 +6,8 @@
    tocar nada. La dirección siempre es "/", así que Google no ve dos
    páginas: las dos versiones declaran el mismo canonical.
 
-   Para revisar una versión fuera de su temporada:
-     /?vista=muertos   /?vista=normal                                    */
+   No hay vista previa a propósito: la versión de temporada no se ve
+   antes de su fecha. Para revisarla, abrir el .html en local.          */
 
 date_default_timezone_set('America/Monterrey');
 
@@ -22,12 +22,7 @@ foreach ($temporadas as [$desde, $hasta, $pagina]) {
   if ($hoy >= $desde && $hoy <= $hasta) { $archivo = $pagina; }
 }
 
-$vista = $_GET['vista'] ?? '';
-if ($vista === 'muertos') { $archivo = 'index-dia-de-muertos.html'; }
-if ($vista === 'normal')  { $archivo = 'index.html'; }
-
 header('Content-Type: text/html; charset=UTF-8');
 // sin caché larga: el día del cambio nadie debe quedarse con la versión anterior
 header('Cache-Control: no-cache, must-revalidate');
-if ($vista !== '') { header('X-Robots-Tag: noindex'); }
 readfile(__DIR__ . '/' . $archivo);
