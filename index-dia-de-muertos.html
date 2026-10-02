@@ -3521,12 +3521,13 @@ footer{
       document.body.classList.add("ready");
     }, wait);
   }
-  if(document.readyState === "complete"){ hidePreloader(); }
-  else{ window.addEventListener("load", hidePreloader); }
-  /* respaldo por si algún recurso tarda demasiado */
-  setTimeout(function(){
-    if(!preloader.classList.contains("done")) hidePreloader();
-  }, 3200);
+  /* La intro dura siempre lo mismo: ya no espera a que bajen todas las
+     fotos (eso con mala señal la alargaba hasta 3.2 s). La foto del hero
+     va precargada con prioridad alta, y las de más abajo siguen cargando
+     mientras se lee la portada. */
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", hidePreloader);
+  } else { hidePreloader(); }
 
   /* ---------- Navbar ---------- */
   var nav = document.getElementById("nav");
