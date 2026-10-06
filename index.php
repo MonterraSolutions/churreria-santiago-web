@@ -18,8 +18,9 @@ date_default_timezone_set('America/Monterrey');
 $temporadas = [
   // [desde MMDD, hasta MMDD, archivo]
   ['1015', '1103', 'index-dia-de-muertos.html'],
-  ['1201', '0106', 'index-navidad.html'],
-  ['0201', '0214', 'index-san-valentin.html'],
+  // Propuestas listas, sin aprobar todavía. Para activarlas, quitar las //:
+  // ['1201', '0106', 'index-navidad.html'],
+  // ['0201', '0214', 'index-san-valentin.html'],
 ];
 
 $archivo = 'index.html';
