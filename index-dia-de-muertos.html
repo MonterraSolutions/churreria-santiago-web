@@ -619,9 +619,14 @@ h1,h2,h3{
 .hero-sub{
   max-width:520px;
   margin:0 auto 34px;
+  text-wrap:balance;   /* en celular: dos renglones parejos */
   font-size:clamp(15px, 1.8vw, 17px);
   font-weight:500;
   color:rgba(255,255,255,.86);
+}
+/* en pantallas medianas y grandes la frase va en un solo renglón */
+@media (min-width:700px){
+  .hero-sub{ max-width:none; white-space:nowrap; }
 }
 .hero-actions{
   display:flex;
@@ -1335,6 +1340,9 @@ body.visor-abierto{ overflow:hidden; }
   font-style:normal;
   color:var(--talavera);
 }
+/* nota que aplica a toda la sección: va pegada al título */
+.lista-nota.arriba{ margin:-6px 0 16px; }
+.li-desc b{ font-weight:700; color:var(--talavera); }
 .lista-nota{
   margin-top:14px;
   font-size:13px;
@@ -2035,6 +2043,17 @@ footer{
   font-size:13px;
   color:rgba(247,241,230,.55);
 }
+/* link al aviso de privacidad: mismo tono que el texto, sin llamar la
+   atención; el padding vertical agranda el área para el dedo */
+.footer-legal{
+  color:inherit;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  display:inline-block;
+  padding:12px 0;
+  margin:-12px 0;
+}
+.footer-legal:hover{ color:#fff; }
 .footer-bottom em{
   font-family:var(--font-serif);
   color:var(--gold);
@@ -2669,7 +2688,7 @@ footer{
           <div class="lista-item">
             <p class="li-nom">Platillo</p>
             <p class="li-precio"><span class="pz"><b>$220</b></span></p>
-            <p class="li-desc">Guiso a elegir: asado de puerco, cortadillo de res, costilla de puerco en salsa, pechuga rellena o chicharrón en salsa.</p>
+            <p class="li-desc">Guiso a elegir: asado de puerco, cortadillo de res, costilla de puerco en salsa, pechuga rellena o chicharrón en salsa.<br>Todos nuestros guisos están acompañados de arroz y frijoles.</p>
           </div>
           <div class="lista-item">
             <p class="li-nom">Sopas y Caldos</p>
@@ -2684,10 +2703,10 @@ footer{
             <p class="li-nom">Enchiladas Suizas</p>
             <p class="li-precio"><span class="pz"><i>Orden</i><b>$190</b></span><span class="pz"><i>Media orden</i><b>$155</b></span></p>
           </div>
-          <p class="lista-nota">Todos nuestros guisos están acompañados de arroz y frijoles.</p>
         </div>
         <div class="lista-bloque">
           <h3 class="lista-titulo">Tacos, Gorditas y Quesadillas</h3>
+          <p class="lista-nota arriba">Tortilla recién hecha.</p>
           <div class="lista-item">
             <p class="li-nom">Tacos</p>
             <p class="li-precio"><span class="pz"><b>$35</b></span></p>
@@ -2711,7 +2730,6 @@ footer{
             <p class="li-nom">Quesadillas</p>
             <p class="li-precio"><span class="pz"><b>$35</b></span></p>
           </div>
-          <p class="lista-nota">Tortilla recién hecha.</p>
         </div>
         <div class="lista-bloque">
           <h3 class="lista-titulo">Tortas y Hamburguesas</h3>
@@ -2951,8 +2969,8 @@ footer{
           <div class="lista-item">
             <p class="li-nom">Con esencia</p>
             <p class="li-precio"><span class="pz"><b>$65</b></span></p>
+            <p class="li-desc"><b>Esencias:</b> avellana · almendra · amaretto · crema irlandesa · vainilla francesa · caramelo.</p>
           </div>
-          <p class="lista-nota"><b>Esencias:</b> avellana · almendra · amaretto · crema irlandesa · vainilla francesa · caramelo.</p>
         </div>
         <div class="lista-bloque">
           <h3 class="lista-titulo">Capuccino Caliente</h3>
@@ -2963,6 +2981,7 @@ footer{
           <div class="lista-item">
             <p class="li-nom">Con esencia</p>
             <p class="li-precio"><span class="pz"><b>$70</b></span></p>
+            <p class="li-desc"><b>Esencias:</b> avellana · almendra · amaretto · crema irlandesa · vainilla francesa · caramelo.</p>
           </div>
           <div class="lista-item">
             <p class="li-nom">Moka</p>
@@ -3490,7 +3509,7 @@ footer{
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© <span id="year">2026</span> La Churrería Santiago. Todos los derechos reservados.</span>
+      <span>© <span id="year">2026</span> La Churrería Santiago. Todos los derechos reservados. · <a class="footer-legal" href="aviso-de-privacidad.html">Aviso de privacidad</a></span>
       <span>Hecho con <em>cariño</em> en el Pueblo Mágico de Santiago, N.L.</span>
       <a class="credit-monterra" href="https://monterra-solutions.com/" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2 6.4 6.4 2-6.4 2-2 6.4-2-6.4-6.4-2 6.4-2z"/></svg>
