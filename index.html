@@ -1992,34 +1992,17 @@ footer{
 
 /* firma de la agencia: discreta, en miniatura */
 .credit-monterra{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:7px 15px 7px 12px;
-  border-radius:100px;
-  border:1px solid rgba(247,241,230,.16);
-  background:rgba(247,241,230,.04);
-  color:rgba(247,241,230,.62);
+  /* firma discreta: texto como el resto de la línea, sin ícono ni botón */
+  color:rgba(247,241,230,.55);
   text-decoration:none;
-  font-size:11.5px;
-  font-weight:600;
-  letter-spacing:.05em;
+  font-size:12.5px;
   white-space:nowrap;
-  transition:color .35s ease, border-color .35s ease, background .35s ease, transform .35s var(--ease-out);
+  padding:12px 0;              /* área para el dedo sin verse botón */
+  transition:color .3s ease;
 }
-.credit-monterra:hover{
-  color:#fff;
-  border-color:rgba(196,164,112,.55);
-  background:rgba(196,164,112,.12);
-  transform:translateY(-2px);
-}
-.credit-monterra svg{
-  width:13px; height:13px;
-  flex-shrink:0;
-  color:var(--gold);
-  transition:transform .5s var(--ease-out);
-}
-.credit-monterra:hover svg{ transform:rotate(90deg) scale(1.12); }
+.credit-monterra b{ font-weight:600; color:rgba(247,241,230,.78); transition:color .3s ease; }
+.credit-monterra:hover, .credit-monterra:hover b{ color:#fff; }
+.credit-monterra:hover b{ text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; }
 .footer-bottom{
   border-top:1px solid rgba(247,241,230,.14);
   padding:19px 0;
@@ -3071,10 +3054,7 @@ footer{
     <div class="footer-bottom">
       <span>© <span id="year">2026</span> La Churrería Santiago. Todos los derechos reservados. · <a class="footer-legal" href="aviso-de-privacidad.html">Aviso de privacidad</a></span>
       <span>Hecho con <em>cariño</em> en el Pueblo Mágico de Santiago, N.L.</span>
-      <a class="credit-monterra" href="https://monterra-solutions.com/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2 6.4 6.4 2-6.4 2-2 6.4-2-6.4-6.4-2 6.4-2z"/></svg>
-        Creado por Monterra Solutions
-      </a>
+      <a class="credit-monterra" href="https://monterra-solutions.com/" target="_blank" rel="noopener">Creado por <b>Monterra Solutions</b></a>
     </div>
   </div>
 </footer>
