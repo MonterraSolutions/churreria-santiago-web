@@ -1,0 +1,4 @@
+# archivos del repo que no se publican en el sitio
+REGLAS.md export-ignore
+CLAUDE.md export-ignore
+.gitattributes export-ignore

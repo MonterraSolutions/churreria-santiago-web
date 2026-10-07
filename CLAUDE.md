@@ -1,0 +1,1 @@
+Lee y sigue REGLAS.md antes de cualquier cambio. En especial: todo cambio de menú o datos del negocio en index.html se replica en index-dia-de-muertos.html, index-navidad.html e index-san-valentin.html en el mismo commit.
