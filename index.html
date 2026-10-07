@@ -3511,8 +3511,13 @@ footer{
       });
 
       cerrar.addEventListener("click", cerrarVisor);
+      /* Sólo el fondo fuera del lienzo (la franja del pie) cierra por clic.
+         El lienzo no: como captura el puntero para poder arrastrar, Chrome le
+         manda el clic de cualquier toque, también de los que caen sobre la
+         carta, y eso cerraba el visor justo después de acercar. Los toques
+         sobre el lienzo los resuelve levantar(). */
       visor.addEventListener("click", function(e){
-        if (e.target === visor || e.target === lienzo) cerrarVisor();
+        if (e.target === visor) cerrarVisor();
       });
       prev.addEventListener("click", function(){ mostrar(indice - 1); });
       sig.addEventListener("click", function(){ mostrar(indice + 1); });
