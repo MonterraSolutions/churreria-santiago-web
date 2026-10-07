@@ -3874,7 +3874,7 @@ footer{ background:#3A1F2B !important; }
 
       function pintar(){
         img.style.transform = "translate(" + x + "px," + y + "px) scale(" + escala + ")";
-        img.style.cursor = escala > 1 ? "grab" : "zoom-in";
+        img.style.cursor = escala > 1 ? "zoom-out" : "zoom-in";
       }
       function reiniciar(){ escala = 1; x = 0; y = 0; pintar(); }
 
@@ -3954,13 +3954,29 @@ footer{ background:#3A1F2B !important; }
         y = Math.max(-ly, Math.min(ly, y));
       }
 
-      // un toque limpio sobre la foto sin zoom también cierra: la X sola
-      // resultaba difícil de atinar en celular
-      var tx = 0, ty = 0, recorrido = 0, huboPellizco = false, ultimo = 0;
+      /* Un toque (o clic) sobre la carta acerca justo donde picaste, y otro
+         toque la regresa a su tamaño. Antes un toque cerraba el visor y el
+         zoom era con doble toque: la lupa invitaba a picar y se cerraba.
+         Para cerrar: la X, Escape o tocar fuera de la imagen. */
+      var tx = 0, ty = 0, recorrido = 0, huboPellizco = false, tocoFoto = false;
+
+      function acercarEn(cx, cy){
+        var r = img.getBoundingClientRect();             // ya con la escala actual
+        var dx = cx - (r.left + r.width / 2), dy = cy - (r.top + r.height / 2);
+        var nueva = 2.4;
+        // el punto tocado se queda bajo el dedo después de acercar
+        x = -dx * (nueva / escala - 1);
+        y = -dy * (nueva / escala - 1);
+        escala = nueva;
+        limitar(); pintar();
+      }
 
       lienzo.addEventListener("pointerdown", function(e){
         if (e.target.closest(".visor-cerrar")) return;   // el botón se maneja solo
-        if (dedos.size === 0) { tx = e.clientX; ty = e.clientY; recorrido = 0; }
+        if (dedos.size === 0) {
+          tx = e.clientX; ty = e.clientY; recorrido = 0;
+          tocoFoto = e.target === img;                     // ¿empezó sobre la carta o sobre lo oscuro?
+        }
         dedos.set(e.pointerId, { x:e.clientX, y:e.clientY });
         lienzo.setPointerCapture(e.pointerId);
         if (dedos.size === 2) { d0 = distancia(); e0 = escala; huboPellizco = true; }
@@ -3986,24 +4002,19 @@ footer{ background:#3A1F2B !important; }
         if (dedos.size !== 0) return;        // todavía queda algún dedo abajo
         moviendo = false;
 
-        /* Al soltar un pellizco se levantan los dos dedos, o sea dos
-           pointerup casi seguidos. Antes eso se leía como doble toque y
-           deshacía el zoom apenas soltabas. Un gesto de dos dedos, o uno
-           que recorrió distancia, nunca cuenta como toque. */
+        // un pellizco o un arrastre nunca cuentan como toque
         var fueGesto = huboPellizco || recorrido >= 10;
         huboPellizco = false;
-        if (fueGesto) { ultimo = 0; return; }
+        if (fueGesto || e.type === "pointercancel") return;
 
-        var ahora = Date.now();
-        if (ahora - ultimo < 300) {          // doble toque
-          if (escala > 1) reiniciar();
-          else { escala = 2.4; pintar(); }
-          ultimo = 0;
-          return;
+        if (tocoFoto) {
+          if (escala > 1) reiniciar();       // segundo toque: tamaño normal
+          else acercarEn(e.clientX, e.clientY);
+        } else if (escala > 1) {
+          reiniciar();                       // fuera de la carta con zoom: primero se aleja
+        } else {
+          cerrarVisor();                     // fuera de la carta sin zoom: cierra
         }
-        ultimo = ahora;
-        // un toque limpio sobre la foto sin zoom cierra; con zoom no estorba
-        if (escala === 1) cerrarVisor();
       }
       lienzo.addEventListener("pointerup", levantar);
       lienzo.addEventListener("pointercancel", levantar);
