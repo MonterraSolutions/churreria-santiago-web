@@ -1,0 +1,6 @@
+# Fotos que se abren en el visor: el CDN de Hostinger las reducía a 800 px
+# en celular. "no-transform" las entrega completas. Las miniaturas de la
+# tira (galeria/*.jpg) siguen optimizadas para que la página cargue rápido.
+<IfModule mod_headers.c>
+  Header set Cache-Control "public, max-age=2592000, no-transform"
+</IfModule>
