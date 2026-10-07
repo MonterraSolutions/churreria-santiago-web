@@ -47,6 +47,15 @@ RewriteRule ^index-(dia-de-muertos|navidad|san-valentin)\.html$ / [L,R=302]
   Header always set X-Frame-Options "SAMEORIGIN"
 </IfModule>
 
+# La carta se ve a pantalla completa con zoom: el CDN de Hostinger la reducía
+# a 1600 px en computadora y a 800 px en celular, y al acercar se veía
+# borrosa. "no-transform" le pide entregarla tal cual, a resolución completa.
+<IfModule mod_headers.c>
+  <FilesMatch "^menu-(alimentos|bebidas)\.jpg$">
+    Header set Cache-Control "public, max-age=2592000, no-transform"
+  </FilesMatch>
+</IfModule>
+
 AddType font/woff2 .woff2
 AddType application/manifest+json .webmanifest
 
