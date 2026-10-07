@@ -1183,7 +1183,9 @@ section{ position:relative; }
   border-radius:10px;
   box-shadow:0 30px 80px rgba(0,0,0,.6);
   transform-origin:center center;
-  will-change:transform;
+  /* sin will-change: con él Safari (iPhone) toma una foto de la carta a
+     tamaño normal y sólo la estira al acercar, y se ve borrosa aunque la
+     imagen sea de alta resolución. Sin él la redibuja con todo el detalle. */
   user-select:none;
   -webkit-user-drag:none;
 }
