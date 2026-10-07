@@ -3314,7 +3314,8 @@ footer{
     { sel: 'a[href^="https://wa.me/"]',         nombre: "click_whatsapp"   },
     { sel: 'a[href^="tel:"]',                   nombre: "click_llamada"    },
     { sel: 'a[href^="mailto:"]',                nombre: "click_correo"     },
-    { sel: 'a[href*="google.com/maps"]',        nombre: "click_como_llegar"},
+    /* el botón usa maps.google.com/?cid=…; se cubren las dos formas de liga */
+    { sel: 'a[href*="maps.google."], a[href*="google.com/maps"]', nombre: "click_como_llegar"},
     { sel: '.red, .nav-ico, .footer-social a',  nombre: "click_redes"      }
   ];
 
