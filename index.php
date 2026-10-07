@@ -6,9 +6,11 @@
    es "/", así que Google no ve páginas distintas: todas las versiones
    declaran el mismo canonical.
 
-   Una temporada puede cruzar de un año a otro (Navidad: 1 de diciembre al
-   6 de enero): si "desde" es mayor que "hasta", vale de "desde" a fin de
-   año y de inicio de año a "hasta".
+   Calendario anual: San Valentín todo febrero, Día de Muertos del 15 de
+   octubre al 15 de noviembre y Navidad del 16 de noviembre al 31 de
+   diciembre; el resto del año, la portada normal. Si alguna temporada
+   llegara a cruzar de un año a otro ("desde" mayor que "hasta"), también
+   funciona: vale de "desde" a fin de año y de inicio de año a "hasta".
 
    No hay vista previa a propósito: una versión de temporada no se ve
    antes de su fecha. Para revisarla, abrir el .html en local.          */
@@ -17,10 +19,9 @@ date_default_timezone_set('America/Monterrey');
 
 $temporadas = [
   // [desde MMDD, hasta MMDD, archivo]
-  ['1015', '1103', 'index-dia-de-muertos.html'],
-  // Propuestas listas, sin aprobar todavía. Para activarlas, quitar las //:
-  // ['1201', '0106', 'index-navidad.html'],
-  // ['0201', '0214', 'index-san-valentin.html'],
+  ['0201', '0229', 'index-san-valentin.html'],  // todo febrero (0229 cubre los bisiestos)
+  ['1015', '1115', 'index-dia-de-muertos.html'],
+  ['1116', '1231', 'index-navidad.html'],
 ];
 
 $archivo = 'index.html';
